@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Campanha de Retorno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Cores e tipos da marca Renata Sasha: azul-petróleo #3BA2B6 e cinza #7C7C7C; logo oficial como imagem.
+   Layout: sistema de trabalho do WhatsApp do salão — atualização mensal no topo, abas Resgate e Cobrança, cada uma com grupos, mensagem e lista de envio */
+:root{
+  --bg:#f4f8f9; --surface:#ffffff; --ink:#2f3638; --muted:#6f777a; --line:#dbe6e9;
+  --accent:#1f7a8c; --accent-soft:#e1f1f4; --brand:#3ba2b6; --brand-gray:#7c7c7c; --wa:#1b8a4c; --wa-soft:#e2f3e9; --warn:#9a6200; --warn-soft:#fbefd9; --bad:#b3261e; --bad-soft:#fbe4e2;
+  --display:"Montserrat",ui-sans-serif,system-ui,sans-serif;
+  --on-accent:#ffffff;
+  --body:"Figtree",ui-sans-serif,system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111719;--surface:#192124;--ink:#e6eef0;--muted:#97a4a8;--line:#2a383c;
+  --accent:#5fc3d6;--accent-soft:#16333a;--brand:#5fc3d6;--brand-gray:#a3a9ab;--wa:#4fcf87;--wa-soft:#1c3327;--warn:#f0b14a;--warn-soft:#3a2c14;--bad:#ff8a80;--bad-soft:#3d1f1d;--on-accent:#0c1a1d;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111719;--surface:#192124;--ink:#e6eef0;--muted:#97a4a8;--line:#2a383c;
+  --accent:#5fc3d6;--accent-soft:#16333a;--brand:#5fc3d6;--brand-gray:#a3a9ab;--wa:#4fcf87;--wa-soft:#1c3327;--warn:#f0b14a;--warn-soft:#3a2c14;--bad:#ff8a80;--bad-soft:#3d1f1d;--on-accent:#0c1a1d;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;overflow-x:hidden}
+img{max-width:100%}
+.confirm strong{overflow-wrap:anywhere}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;gap:20px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,4vw,2.3rem);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+header{display:grid;gap:8px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:14px;min-width:0}
+.row-wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.btn{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.chip:focus-visible,.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.brand-logo{display:block;width:240px;max-width:100%;height:auto;background:#ffffff;border-radius:10px}
+.btn.primary:hover{filter:brightness(1.08)}
+
+.btn.wa{background:var(--wa);border-color:var(--wa);color:var(--on-accent)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:6px 10px;font-size:.85rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+input[type=text],input[type=search],input[type=number],input[type=date],input[type=tel],textarea,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;min-width:0}
+textarea{min-height:110px;resize:vertical;line-height:1.45}
+.banner{border-radius:10px;padding:10px 14px;font-size:.9rem}
+.banner.ex{background:var(--warn-soft);color:var(--warn)}
+.banner.ok{background:var(--wa-soft);color:var(--wa)}
+.banner.bad{background:var(--bad-soft);color:var(--bad)}
+.stats{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.stats b{color:var(--ink);font-weight:600}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-family:var(--display);font-weight:600;font-size:1.05rem;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 16px;cursor:pointer;margin-bottom:-1px}
+.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .cnt{font-family:var(--body);font-size:.75rem;font-weight:700;background:var(--accent-soft);color:var(--accent);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.view{display:grid;gap:20px}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.chip{font:inherit;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:12px;cursor:pointer;display:grid;gap:2px}
+.chip .n{font-family:var(--display);font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.chip .l{font-weight:600;font-size:.92rem}
+.chip .d{font-size:.78rem;color:var(--muted)}
+.chip[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+.chip[aria-pressed=true] .n{color:var(--accent)}
+.opts{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.9rem}
+.opts label,.check{display:flex;gap:7px;align-items:center;cursor:pointer}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:2fr 1.3fr 1fr 1.2fr;gap:10px;align-items:end}
+@media (max-width:720px){.grid2,.grid4{grid-template-columns:1fr}}
+.field{display:grid;gap:6px;min-width:0}
+.field>span{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.preview{background:var(--wa-soft);border-radius:10px 10px 10px 2px;padding:10px 12px;white-space:pre-wrap;font-size:.92rem;word-break:break-word}
+.vars{font-size:.8rem;color:var(--muted)}
+.vars code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.toolbar input{max-width:300px}
+.progress{font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress b{color:var(--wa)}
+ul.list{list-style:none;margin:0;padding:0;display:grid}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center;padding:12px 2px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.who{min-width:0;display:grid;gap:2px}
+.who .nm{font-weight:600;overflow-wrap:anywhere}
+.meta{font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;font-variant-numeric:tabular-nums}
+.money{font-family:var(--display);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.tag{font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.tag.sent{background:var(--wa-soft);color:var(--wa)}
+.tag.late{background:var(--bad-soft);color:var(--bad)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.item.done .nm{color:var(--muted)}
+@media (max-width:560px){.item{grid-template-columns:1fr}.acts{justify-content:flex-start}}
+.more{justify-self:center}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+.kpis{display:flex;flex-wrap:wrap;gap:10px 28px}
+.kpi{display:grid}
+.kpi .v{font-family:var(--display);font-size:1.7rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
+.kpi .k{font-size:.8rem;color:var(--muted)}
+.kpi.bad .v{color:var(--bad)}
+.kpi.ok .v{color:var(--wa)}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+.tbl table{border-collapse:collapse;font-size:.82rem;width:100%}
+.tbl th,.tbl td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.tbl th{color:var(--muted);font-weight:600}
+details summary{cursor:pointer;font-weight:600}
+details ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px;font-size:.9rem;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-size:.9rem;font-weight:500;z-index:9;max-width:calc(100% - 32px)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;justify-self:start}
+.seg button{font:inherit;font-size:.85rem;font-weight:600;background:var(--surface);color:var(--muted);border:0;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--accent-soft);color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.chip,.btn,.tab{transition:border-color .15s,background .15s,color .15s}}
+
+.drop{position:relative;border:2px dashed var(--line);border-radius:14px;background:var(--bg);padding:28px 20px;display:grid;justify-items:center;gap:8px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.drop:hover,.drop:focus-visible{border-color:var(--accent);outline:none}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop svg{width:40px;height:40px;color:var(--accent)}
+.drop .big{font-family:var(--display);font-weight:600;font-size:1.1rem}
+.drop .hint{font-size:.85rem;color:var(--muted)}
+.drop.busy{pointer-events:none;opacity:.7}
+.drop.compact{padding:14px 16px;grid-auto-flow:column;justify-content:start;text-align:left;gap:12px}
+.drop.compact svg{width:26px;height:26px}
+.drop.compact .big{font-size:.98rem}
+.confirm{border:1px solid var(--accent);background:var(--accent-soft);border-radius:12px;padding:16px;display:grid;gap:10px}
+.confirm .nums{display:flex;flex-wrap:wrap;gap:6px 22px;font-variant-numeric:tabular-nums}
+.confirm .nums b{font-family:var(--display);font-size:1.3rem;display:block;color:var(--ink)}
+.confirm .nums span{font-size:.8rem;color:var(--muted)}
+.steps{margin:0;padding-left:20px;display:grid;gap:4px;font-size:.88rem;color:var(--muted)}
+footer{font-size:.8rem;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <img class="brand-logo" src="logo.png" alt="Renata Sasha Beauty Company" width="476" height="192">
+    <h1>Campanha de Retorno</h1>
+    <p class="muted">Resgate de clientes e cobrança pelo WhatsApp do salão, uma mensagem por vez.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="t-mes">
+    <h2 id="t-mes">Atualização do mês</h2>
+    <div id="banner" class="banner ex">Nenhuma lista carregada ainda.</div>
+    <div class="drop" id="dropClientes" role="button" tabindex="0" aria-describedby="dropHint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+      <div><div class="big" id="dropTitle">Arraste aqui a lista de clientes do Trinks</div>
+      <div class="hint" id="dropHint">ou toque para escolher o arquivo · CSV ou Excel</div></div>
+    </div>
+    <input id="fileClientes" type="file" accept=".csv,.xlsx,.xls,text/csv" hidden>
+    <div class="confirm" id="confirmBox" hidden>
+      <strong id="confirmTitle"></strong>
+      <div class="nums" id="confirmNums"></div>
+      <div class="row-wrap">
+        <button class="btn primary" id="btnUsar">Usar esta lista</button>
+        <button class="btn ghost" id="btnDescartar">Cancelar</button>
+      </div>
+    </div>
+    <details id="howTo">
+      <summary>Como tirar a lista do Trinks</summary>
+      <ol class="steps">
+        <li>No Trinks, abra o relatório de <b>Clientes</b> (lista de clientes do estabelecimento).</li>
+        <li>Deixe marcado para listar todos os clientes ativos.</li>
+        <li>Clique em exportar e salve o arquivo (CSV ou Excel).</li>
+        <li>Volte aqui e arraste o arquivo para a área acima, ou toque nela para escolher.</li>
+      </ol>
+    </details>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tabResgate" aria-selected="true" aria-controls="vResgate">Resgate</button>
+    <button class="tab" role="tab" id="tabCobranca" aria-selected="false" aria-controls="vCobranca">Cobrança<span class="cnt" id="cntCob" hidden></span></button>
+  </nav>
+
+  <div class="view" id="vResgate" role="tabpanel" aria-labelledby="tabResgate">
+    <section class="panel" aria-labelledby="t-seg">
+      <h2 id="t-seg">1. Escolha o grupo</h2>
+      <div class="stats" id="stats"></div>
+      <div class="chips" id="chips"></div>
+      <div class="opts">
+        <label><input type="checkbox" id="optSms" checked> Só quem aceita mensagens ("Recebe SMS" = Sim no Trinks)</label>
+        <label><input type="checkbox" id="optStaff" checked> Esconder equipe (nomes com "- SALÃO")</label>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-msg">
+      <h2 id="t-msg">2. Mensagem do grupo</h2>
+      <div class="grid2">
+        <div class="field">
+          <span>Nome do salão</span>
+          <input type="text" id="salao">
+          <span>Texto</span>
+          <textarea id="tpl"></textarea>
+          <p class="vars">Use <code>{nome}</code>, <code>{tempo}</code> e <code>{salao}</code>. O texto fica salvo para toda a equipe.</p>
+          <label class="check small"><input type="checkbox" id="optSair" checked> Incluir "Se não quiser receber, responda SAIR."</label>
+        </div>
+        <div class="field">
+          <span>Como a cliente vai receber</span>
+          <div class="preview" id="preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-list">
+      <div class="toolbar">
+        <h2 id="t-list">3. Enviar</h2>
+        <input type="search" id="q" placeholder="Buscar por nome ou telefone" aria-label="Buscar cliente">
+      </div>
+      <p class="progress" id="progress"></p>
+      <ul class="list" id="list"></ul>
+      <button class="btn ghost more" id="more" hidden>Mostrar mais</button>
+    </section>
+  </div>
+
+  <div class="view" id="vCobranca" role="tabpanel" aria-labelledby="tabCobranca" hidden>
+    <section class="panel" aria-labelledby="t-cob">
+      <h2 id="t-cob">Resumo</h2>
+      <div class="kpis" id="kpis"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-cadd">
+      <h2 id="t-cadd">Adicionar débitos</h2>
+      <div class="drop compact" id="dropDebitos" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+        <div><div class="big">Arraste a planilha de débitos</div>
+        <div class="hint">ou toque para escolher · CSV ou Excel · relatório do Trinks ou planilha feita à mão</div></div>
+      </div>
+      <input id="fileDebitos" type="file" accept=".csv,.xlsx,.xls,text/csv" hidden>
+      <div id="mapBox" class="field" hidden>
+        <span>Quais colunas são o quê?</span>
+        <div class="map" id="map"></div>
+        <div class="tbl" id="mapPreview"></div>
+        <p class="small muted" id="mapInfo"></p>
+        <div class="row-wrap">
+          <button class="btn primary" id="btnImport">Importar</button>
+          <button class="btn ghost" id="btnCancelImport">Cancelar</button>
+        </div>
+      </div>
+      <p class="small muted">Ou adicione um por um:</p>
+      <form id="formDebito" class="grid4">
+        <label class="field"><span>Cliente</span><input type="text" id="dNome" list="nomesClientes" required autocomplete="off"></label>
+        <label class="field"><span>WhatsApp</span><input type="tel" id="dTel" placeholder="(91) 98888-7777"></label>
+        <label class="field"><span>Valor (R$)</span><input type="text" id="dValor" inputmode="decimal" placeholder="120,00" required></label>
+        <label class="field"><span>Desde</span><input type="date" id="dData"></label>
+        <label class="field" style="grid-column:1/-2"><span>Referente a (opcional)</span><input type="text" id="dDesc" placeholder="Ex.: progressiva de 12/09"></label>
+        <button class="btn primary" type="submit">Adicionar</button>
+      </form>
+      <datalist id="nomesClientes"></datalist>
+    </section>
+
+    <section class="panel" aria-labelledby="t-cmsg">
+      <h2 id="t-cmsg">Mensagem de cobrança</h2>
+      <div class="grid2">
+        <div class="field">
+          <div class="seg" role="group" aria-label="Qual aviso">
+            <button data-av="1" aria-pressed="true">1º aviso</button>
+            <button data-av="2" aria-pressed="false">2º aviso em diante</button>
+          </div>
+          <span>Texto</span>
+          <textarea id="ctpl"></textarea>
+          <span>Chave PIX do salão</span>
+          <input type="text" id="pix" placeholder="CNPJ, celular, e-mail ou chave aleatória">
+          <p class="vars">Use <code>{nome}</code>, <code>{valor}</code>, <code>{data}</code>, <code>{ref}</code>, <code>{pix}</code> e <code>{salao}</code>. Cada cliente recebe o aviso certo automaticamente.</p>
+        </div>
+        <div class="field">
+          <span>Como a cliente vai receber</span>
+          <div class="preview" id="cpreview"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-clist">
+      <div class="toolbar">
+        <h2 id="t-clist">Cobrar</h2>
+        <div class="row-wrap">
+          <div class="seg" role="group" aria-label="Filtrar cobranças">
+            <button data-cf="abertas" aria-pressed="true">Em aberto</button>
+            <button data-cf="pagas" aria-pressed="false">Recebidas</button>
+          </div>
+          <input type="search" id="cq" placeholder="Buscar por nome" aria-label="Buscar cobrança" style="max-width:220px">
+        </div>
+      </div>
+      <ul class="list" id="clist"></ul>
+    </section>
+  </div>
+
+  <details class="panel">
+    <summary>Rotina sugerida para quem cuida do WhatsApp</summary>
+    <ul>
+      <li><b>Início de cada mês:</b> exportar o relatório de Clientes do Trinks e enviar em "Atualização do mês". Lançar os débitos novos na aba Cobrança.</li>
+      <li><b>Todo dia:</b> 30 a 40 mensagens de resgate, começando por "Hora de voltar" e "Nunca vieram". VIPs e clientes com mais pontos aparecem primeiro.</li>
+      <li><b>Cobrança:</b> 1º aviso quando o débito entra; novo aviso a cada 7 dias sem pagamento (a lista avisa quando chega a hora). Quando pagar, clicar em "Recebido".</li>
+      <li>Responder quem respondeu antes de mandar a próxima leva. Quem pedir para sair: desmarcar "Recebe SMS" no Trinks.</li>
+      <li>Variar o texto de vez em quando. Muitas mensagens idênticas seguidas chamam atenção do WhatsApp.</li>
+    </ul>
+  </details>
+</div>
+<footer>Os dados ficam salvos somente neste navegador. Use sempre o mesmo computador ou celular para trabalhar.</footer>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+(function(){
+const SEGS=[
+ {id:'hora',l:'Hora de voltar',d:'Última visita há 31 a 60 dias',
+  t:'Oi, {nome}! Tudo bem? 😊 Aqui é do salão {salao}. Já faz {tempo} da sua última visita. Quer que eu veja um horário pra você essa semana?'},
+ {id:'nunca',l:'Nunca vieram',d:'Cadastradas que não concluíram visita',
+  t:'Oi, {nome}! Aqui é do salão {salao}. Vi que você se cadastrou com a gente, mas ainda não conseguimos te atender. Que tal marcar seu primeiro horário? Me diz o melhor dia que eu encaixo você 💕'},
+ {id:'sumindo',l:'Sumindo',d:'Há 61 a 120 dias',
+  t:'Oi, {nome}! Aqui é do salão {salao}, sentimos sua falta 💕 Faz {tempo} que você não vem. Bora marcar um momento só seu? Me diz o melhor dia que eu encaixo.'},
+ {id:'sumidas',l:'Sumidas',d:'Há 4 meses a 1 ano',
+  t:'Oi, {nome}! Aqui é do salão {salao}. Faz {tempo} que a gente não se vê! Temos horários essa semana. Quer que eu reserve um pra você?'},
+ {id:'cancelou',l:'Cancelaram o último',d:'Já vieram, mas cancelaram ou faltaram no último',
+  t:'Oi, {nome}! Aqui é do salão {salao}. Vi que seu último horário não rolou. Quer remarcar? Me fala o melhor dia que eu encaixo você.'},
+ {id:'antigas',l:'Antigas',d:'Mais de 1 ano sem vir',
+  t:'Oi, {nome}! Tudo bem? Aqui é do salão {salao}. Você já esteve com a gente e adoraríamos te receber de novo. Quer que eu te passe os horários disponíveis?'},
+ {id:'aniver',l:'Aniversariantes',d:'Fazem aniversário este mês',
+  t:'Oi, {nome}! Aqui é do salão {salao} e a gente quer te desejar um feliz aniversário 🎉 Que tal comemorar com um momento de cuidado? Responde aqui que a gente reserva seu horário.'}
+];
+const COB_TPL={
+ 1:'Oi, {nome}! Tudo bem? Aqui é do salão {salao}. Passando para lembrar do valor de {valor} em aberto ({ref}, desde {data}). Se preferir, pode pagar pelo PIX: {pix}\nQualquer dúvida é só me chamar. Obrigada! 💕',
+ 2:'Oi, {nome}! Aqui é do salão {salao} de novo. Ainda consta em aberto o valor de {valor} ({ref}, desde {data}). Consegue acertar essa semana? PIX: {pix}\nSe já pagou, me manda o comprovante que eu dou baixa. Obrigada!'
+};
+const SAIR='\n\nSe não quiser receber nossas mensagens, é só responder SAIR.';
+const DEF_SALAO='Renata Sasha Beauty Company';
+const RECONTATO=30, NOVO_AVISO=7;
+const $=id=>document.getElementById(id);
+const local={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+             set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const today=new Date();today.setHours(0,0,0,0);
+const pad=n=>String(n).padStart(2,'0');
+const isoOf=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const todayKey=isoOf(today);
+const daysSince=iso=>iso?Math.round((today-new Date(iso+'T00:00:00'))/864e5):null;
+const brl=v=>(+v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const brDate=iso=>iso?iso.slice(8,10)+'/'+iso.slice(5,7)+'/'+iso.slice(0,4):'';
+
+let db=null, clients=[], byTel={}, byName={};
+let seg=local.get('seg','hora'), shown=50, tab=local.get('tab','resgate'), cf='abertas', av=1, imp=null, pendingDel=null;
+let cfg={salao:DEF_SALAO,tpls:{},sair:true,pix:'',cob:{}}, sent={}, debts=[];
+
+/* ---------- leitura de arquivos ---------- */
+function phone(p){let d=String(p||'').replace(/\D/g,'');if(d.startsWith('55')&&d.length>11)d=d.slice(2);return d.length==11&&d[2]=='9'?d:''}
+function isoBR(s){if(s instanceof Date&&!isNaN(s))return isoOf(s);s=String(s||'');
+  let m=/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/.exec(s);if(m){const y=m[3].length==2?'20'+m[3]:m[3];return y+'-'+pad(+m[2])+'-'+pad(+m[1])}
+  m=/(\d{4})-(\d{2})-(\d{2})/.exec(s);return m?m[0]:''}
+function money(s){if(typeof s=='number')return Math.abs(s);let t=String(s||'').replace(/[^\d,.-]/g,'');if(!t)return 0;
+  if(t.includes(','))t=t.replace(/\./g,'').replace(',','.');return Math.abs(parseFloat(t))||0}
+function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim()}
+function parseCSV(text){
+  const head=text.split('\n').slice(0,15).join('\n'),sep=(head.match(/;/g)||[]).length>=(head.match(/,/g)||[]).length?';':',';
+  const rows=[];let row=[],f='',q=false;
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){if(c=='"'){if(text[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c=='"')q=true;else if(c==sep){row.push(f);f=''}
+    else if(c=='\n'){row.push(f);rows.push(row);row=[];f=''}
+    else if(c!='\r')f+=c;}
+  if(f||row.length){row.push(f);rows.push(row)}
+  return rows;
+}
+function readRows(file){return new Promise((ok,bad)=>{const r=new FileReader();
+  r.onerror=()=>bad(new Error('Não consegui abrir o arquivo.'));
+  r.onload=()=>{try{const buf=new Uint8Array(r.result);
+    if(/\.xlsx?$/i.test(file.name)){if(!window.XLSX)throw new Error('O leitor de Excel não carregou. Salve a planilha como CSV e tente de novo.');
+      const wb=XLSX.read(buf,{type:'array',cellDates:true});ok(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:''}));return}
+    let text;try{text=new TextDecoder('utf-8',{fatal:true}).decode(buf)}catch(e){text=new TextDecoder('windows-1252').decode(buf)}
+    ok(parseCSV(text.replace(/^\uFEFF/,'')))}catch(e){bad(e)}};
+  r.readAsArrayBuffer(file)})}
+
+/* ---------- clientes ---------- */
+function stCode(s){s=norm(s);if(/aguardando|confirmado|em atendimento/.test(s))return 'A';if(/cancelado|nao compareceu/.test(s))return 'C';return s?'F':''}
+function compactClientes(rows){
+  const h=rows.findIndex(r=>String(r[0]).trim()=='CPF'&&r.map(x=>String(x).trim()).includes('Nome'));
+  if(h<0)throw new Error('Esse arquivo não parece o relatório de Clientes do Trinks (não achei as colunas CPF e Nome).');
+  const H=rows[h].map(x=>String(x).trim()),ix=n=>H.indexOf(n),out=[];
+  for(const r of rows.slice(h+1)){if(r.length<10)continue;const g=n=>ix(n)<0?'':(r[ix(n)]??'');const nb=isoBR(g('Data de Nascimento'));
+    const ult=isoBR(g('Último agendamento')),s1=stCode(g('Status do primeiro agendamento')),s2=stCode(g('Status do último agendamento'));
+    out.push([String(g('Nome')).replace(/\s+/g,' ').trim(),phone(g('Telefone 1'))||phone(g('Telefone 2')),ult,s2,nb?+nb.slice(5,7):0,
+      String(g('Recebe SMS')).trim()=='Sim'?1:0,parseInt(g('Pontos de Fidelidade'))||0,/vip/i.test(g('Etiquetas'))?1:0,(!ult||(s1=='C'&&s2=='C'))?1:0])}
+  if(!out.length)throw new Error('Não encontrei clientes no arquivo.');
+  return out;
+}
+function loadClients(rows){
+  clients=rows.map(r=>({nome:r[0],tel:r[1],ult:r[2]?new Date(r[2]+'T00:00:00'):null,st:r[3],mes:r[4],sms:!!r[5],pts:r[6],vip:!!r[7],nunca:!!r[8]}));
+  byTel={};byName={};
+  for(const c of clients){c.dias=c.ult?Math.round((today-c.ult)/864e5):null;c.staff=/-\s*sal[aã]o/i.test(c.nome);
+    if(c.tel){const o=byTel[c.tel];if(!o||(c.ult&&(!o.ult||c.ult>o.ult)))byTel[c.tel]=c}
+    const k=norm(c.nome);if(k&&c.tel&&!byName[k])byName[k]=c}
+  for(const c of clients)c.dup=!!c.tel&&byTel[c.tel]!==c;
+  $('nomesClientes').innerHTML=Object.values(byName).map(c=>`<option value="${esc(c.nome)}"></option>`).join('');
+}
+
+/* ---------- regras de resgate ---------- */
+const cap=w=>w?w[0].toUpperCase()+w.slice(1).toLowerCase():'';
+function firstName(n){return cap(String(n||'').replace(/-\s*sal[aã]o.*/i,'').trim().split(/\s+/)[0]||'')}
+function fmtPhone(d){return d?'('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7):'sem WhatsApp'}
+function fmtDate(dt){return dt?dt.toLocaleDateString('pt-BR'):'—'}
+function tempo(dias){if(dias==null)return 'um tempo';if(dias<56){const s=Math.max(1,Math.round(dias/7));return s+(s==1?' semana':' semanas')}
+  if(dias<365){const m=Math.round(dias/30);return m+(m==1?' mês':' meses')}const a=Math.floor(dias/365);return a==1?'mais de 1 ano':a+' anos'}
+function segOf(c){
+  if(c.st=='A'||(c.dias!=null&&c.dias<0))return [];
+  const s=[];if(c.mes==today.getMonth()+1)s.push('aniver');
+  if(c.nunca){s.push('nunca');return s}
+  if(c.dias==null)return s;
+  if(c.st=='C'&&c.dias<=365)s.push('cancelou');
+  else if(c.dias>30&&c.dias<=60)s.push('hora');else if(c.dias>60&&c.dias<=120)s.push('sumindo');
+  else if(c.dias>120&&c.dias<=365)s.push('sumidas');else if(c.dias>365)s.push('antigas');
+  return s;
+}
+const recent=tel=>{const d=sent[tel];return !!d&&daysSince(d)<RECONTATO};
+function eligible(){const sms=$('optSms').checked,staff=$('optStaff').checked;
+  return clients.filter(c=>c.tel&&!c.dup&&(!sms||c.sms)&&(!staff||!c.staff))}
+function tplOf(id){return (cfg.tpls||{})[id]??SEGS.find(s=>s.id==id).t}
+function msgFor(c){
+  const t=tplOf(seg).replace(/\{nome\}/g,firstName(c.nome)).replace(/\{tempo\}/g,tempo(c.dias)).replace(/\{salao\}/g,(cfg.salao||'').trim()||DEF_SALAO);
+  return cfg.sair!==false?t+SAIR:t;
+}
+
+/* ---------- regras de cobrança ---------- */
+function ctplOf(n){return (cfg.cob||{})[n]??COB_TPL[n]}
+function avisoDe(d){return (d.avisos||[]).length?2:1}
+function cmsgFor(d,n){
+  const ref=(d.desc||'').trim()||'atendimento no salão';
+  return ctplOf(n||avisoDe(d)).replace(/\{nome\}/g,firstName(d.nome)).replace(/\{valor\}/g,brl(d.valor)).replace(/\{data\}/g,brDate(d.data)||'algum tempo')
+    .replace(/\{ref\}/g,ref).replace(/\{pix\}/g,(cfg.pix||'').trim()||'(peça a chave PIX no salão)').replace(/\{salao\}/g,(cfg.salao||'').trim()||DEF_SALAO);
+}
+function telOfDebt(d){if(d.tel)return d.tel;const c=byName[norm(d.nome)];return c?c.tel:''}
+function avisoDue(d){const a=d.avisos||[];if(!a.length)return 1;return daysSince(a[a.length-1])>=NOVO_AVISO?1:0}
+
+/* ---------- tela: resgate ---------- */
+function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function renderStats(){
+  const noTel=clients.filter(c=>!c.tel).length,dup=clients.filter(c=>c.dup).length,
+    noSms=clients.filter(c=>c.tel&&!c.dup&&!c.sms).length,rec=clients.filter(c=>c.tel&&!c.dup&&!segOf(c).some(x=>x!='aniver')).length;
+  $('stats').innerHTML=clients.length?`<span><b>${clients.length.toLocaleString('pt-BR')}</b> clientes</span><span><b>${noTel}</b> sem celular</span><span><b>${dup}</b> telefones repetidos</span><span><b>${noSms}</b> não aceitam mensagens</span><span><b>${rec}</b> vieram há pouco ou já têm horário</span>`:'';
+}
+function renderChips(){const el=eligible();
+  $('chips').innerHTML=SEGS.map(s=>{const n=el.filter(c=>segOf(c).includes(s.id)&&!recent(c.tel)).length;
+    return `<button class="chip" data-s="${s.id}" aria-pressed="${s.id==seg}"><span class="n">${n.toLocaleString('pt-BR')}</span><span class="l">${s.l}</span><span class="d">${s.d}</span></button>`}).join('')}
+function renderMsg(){
+  if(document.activeElement!==$('tpl'))$('tpl').value=tplOf(seg);
+  if(document.activeElement!==$('salao'))$('salao').value=cfg.salao||'';
+  $('optSair').checked=cfg.sair!==false;
+  const ex=current()[0]||{nome:'Maria Silva',dias:42};$('preview').textContent=msgFor(ex);
+}
+function current(){
+  const q=norm($('q').value),qd=q.replace(/\D/g,'');
+  return eligible().filter(c=>segOf(c).includes(seg)).filter(c=>!q||norm(c.nome).includes(q)||(qd&&c.tel.includes(qd)))
+   .sort((a,b)=>(recent(a.tel)-recent(b.tel))||(b.vip-a.vip)||(b.pts-a.pts)||((a.dias??1e9)-(b.dias??1e9)));
+}
+function renderList(){
+  const list=current(),tot=list.length,done=list.filter(c=>recent(c.tel)).length,hoje=Object.values(sent).filter(d=>d==todayKey).length;
+  $('progress').innerHTML=`<b>${done}</b> de ${tot.toLocaleString('pt-BR')} receberam mensagem nos últimos ${RECONTATO} dias · <b>${hoje}</b> enviadas hoje (meta: até 40)`;
+  $('list').innerHTML=tot?list.slice(0,shown).map(c=>{const s=sent[c.tel],r=recent(c.tel);
+    return `<li class="item${r?' done':''}"><div class="who"><span class="nm">${esc(c.nome)} ${c.vip?'<span class="tag">VIP</span>':''} ${s?`<span class="tag ${r?'sent':'warn'}">${r?'Enviada':'Última msg'} ${s.slice(8,10)}/${s.slice(5,7)}</span>`:''}</span>
+    <span class="meta"><span>${fmtPhone(c.tel)}</span><span>${c.ult?`Última visita ${fmtDate(c.ult)} (${tempo(c.dias)})`:'Nunca agendou'}</span>${c.pts?`<span>${c.pts} pts fidelidade</span>`:''}</span></div>
+    <div class="acts"><a class="btn wa sm" href="https://wa.me/55${c.tel}?text=${encodeURIComponent(msgFor(c))}" target="_blank" rel="noopener" data-send="${c.tel}">Abrir no WhatsApp</a>
+    <button class="btn sm" data-copy="${c.tel}">Copiar texto</button>
+    <button class="btn ghost sm" data-toggle="${c.tel}">${r?'Desmarcar':'Marcar enviada'}</button></div></li>`}).join('')
+    :`<li class="empty">${clients.length?'Ninguém neste grupo com os filtros atuais.':'Carregando clientes…'}</li>`;
+  $('more').hidden=tot<=shown;
+}
+
+/* ---------- tela: cobrança ---------- */
+function renderCob(){
+  const ab=debts.filter(d=>d.status!='paga'),pg=debts.filter(d=>d.status=='paga');
+  const tot=ab.reduce((s,d)=>s+(+d.valor||0),0),mes=pg.filter(d=>(d.pagaEm||'').slice(0,7)==todayKey.slice(0,7)).reduce((s,d)=>s+(+d.valor||0),0);
+  const hora=ab.filter(d=>avisoDue(d)&&telOfDebt(d)).length;
+  $('cntCob').hidden=!ab.length;$('cntCob').textContent=ab.length;
+  $('kpis').innerHTML=`<div class="kpi bad"><span class="v">${brl(tot)}</span><span class="k">em aberto · ${ab.length} débito${ab.length==1?'':'s'}</span></div>
+    <div class="kpi"><span class="v">${hora}</span><span class="k">para avisar hoje</span></div>
+    <div class="kpi ok"><span class="v">${brl(mes)}</span><span class="k">recebido este mês</span></div>`;
+  if(document.activeElement!==$('ctpl'))$('ctpl').value=ctplOf(av);
+  if(document.activeElement!==$('pix'))$('pix').value=cfg.pix||'';
+  const ex=ab[0]||{nome:'Maria Silva',valor:150,data:isoOf(new Date(today-20*864e5)),desc:'progressiva'};
+  $('cpreview').textContent=cmsgFor(ex,av);
+  const q=norm($('cq').value);
+  const list=(cf=='abertas'?ab:pg).filter(d=>!q||norm(d.nome).includes(q)).sort((a,b)=>cf=='abertas'
+    ?((avisoDue(b)-avisoDue(a))||String(a.data||'9').localeCompare(String(b.data||'9')))
+    :String(b.pagaEm||'').localeCompare(String(a.pagaEm||'')));
+  $('clist').innerHTML=list.length?list.map(d=>{const tel=telOfDebt(d),avs=d.avisos||[],ult=avs[avs.length-1],dd=daysSince(d.data),due=avisoDue(d);
+    const tag=d.status=='paga'?`<span class="tag sent">Recebido ${brDate(d.pagaEm).slice(0,5)}</span>`
+      :(avs.length?`<span class="tag ${due?'late':'warn'}">${avs.length} aviso${avs.length>1?'s':''} · último ${brDate(ult).slice(0,5)}${due?' · avisar de novo':''}</span>`:`<span class="tag late">Não avisada</span>`);
+    const acts=d.status!='paga'
+      ?(tel?`<a class="btn wa sm" href="https://wa.me/55${tel}?text=${encodeURIComponent(cmsgFor(d))}" target="_blank" rel="noopener" data-cob="${d.id}">${avs.length?'Enviar novo aviso':'Enviar 1º aviso'}</a>`:`<span class="small muted">Sem WhatsApp cadastrado</span>`)+`<button class="btn sm" data-paid="${d.id}">Recebido</button>`
+      :`<button class="btn ghost sm" data-unpaid="${d.id}">Reabrir</button>`;
+    return `<li class="item${d.status=='paga'?' done':''}"><div class="who"><span class="nm">${esc(d.nome)} ${tag}</span>
+      <span class="meta"><span class="money">${brl(d.valor)}</span>${d.data?`<span>desde ${brDate(d.data)}${dd>0?` (${dd} dias)`:''}</span>`:''}${d.desc?`<span>${esc(d.desc)}</span>`:''}<span>${fmtPhone(tel)}</span></span></div>
+      <div class="acts">${acts}<button class="btn ghost sm" data-del="${d.id}">${pendingDel==d.id?'Confirmar exclusão':'Excluir'}</button></div></li>`}).join('')
+    :`<li class="empty">${cf=='abertas'?'Nenhum débito em aberto. Importe uma planilha ou adicione acima.':'Nenhum pagamento registrado ainda.'}</li>`;
+}
+
+function renderTabs(){
+  $('tabResgate').setAttribute('aria-selected',tab=='resgate');$('tabCobranca').setAttribute('aria-selected',tab=='cobranca');
+  $('vResgate').hidden=tab!='resgate';$('vCobranca').hidden=tab!='cobranca';
+}
+function renderAll(){renderTabs();renderStats();renderChips();renderMsg();renderList();renderCob()}
+function toast(t){const e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2600)}
+function banner(cls,t){const b=$('banner');b.className='banner '+cls;b.textContent=t}
+
+/* ---------- gravação ---------- */
+async function markSent(tel,on){
+  if(on)sent[tel]=todayKey;else delete sent[tel];
+  renderChips();renderList();
+  if(db){try{const r=db.collection('envios').doc(tel);on?await r.set({data:todayKey,grupo:seg}):await r.delete()}
+    catch(e){toast('Não consegui salvar a marcação. Confira a internet.')}}
+  else local.set('sent',sent);
+}
+let cfgTimer=null;
+function saveCfg(){clearTimeout(cfgTimer);
+  cfgTimer=setTimeout(async()=>{if(db){try{await db.doc('config/mensagens').set(cfg)}catch(e){toast('Não consegui salvar o texto.')}}else local.set('cfg',cfg)},700)}
+async function saveClientes(rows,name){
+  if(!db){const meta={arquivo:name,geradoEm:todayKey,total:rows.length};
+    try{localStorage.setItem('lista',JSON.stringify({meta,rows}))}catch(e){toast('A lista é grande demais para guardar neste navegador. Ela vale só até fechar a página.')}
+    loadClients(rows);showMeta(meta);renderAll();toast('Lista do mês atualizada');return}
+  banner('ex','Salvando a nova lista…');
+  const n=Math.ceil(rows.length/1000);
+  try{for(let k=0;k<n;k++)await db.collection('listas/atual/partes').doc('p'+k).set({rows:rows.slice(k*1000,(k+1)*1000)});
+    await db.doc('listas/atual').set({arquivo:name,geradoEm:todayKey,partes:n,total:rows.length,versao:new Date().toISOString()});
+    toast('Lista do mês atualizada')}
+  catch(e){banner('bad','Não consegui salvar a lista. Se você só tem acesso de leitura, peça acesso de Colaborador para a dona da página.')}
+}
+function newId(){return 'd'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+async function putDebt(d){
+  const i=debts.findIndex(x=>x.id==d.id);if(i<0)debts.push(d);else debts[i]=d;renderCob();
+  if(db){const {id,...body}=d;try{await db.collection('cobrancas').doc(id).set(body)}catch(e){toast('Não consegui salvar a cobrança.')}}
+  else local.set('debts',debts);
+}
+async function delDebt(id){
+  debts=debts.filter(x=>x.id!=id);renderCob();
+  if(db){try{await db.collection('cobrancas').doc(id).delete()}catch(e){toast('Não consegui excluir.')}}else local.set('debts',debts);
+}
+
+/* ---------- importação de débitos ---------- */
+const FIELDS=[['nome','Nome da cliente',/nome|cliente/],['tel','WhatsApp (opcional)',/celular|telefone|fone|whats/],['valor','Valor',/valor|saldo|debito|total|devendo|pendente|divida/],['data','Data (opcional)',/data|vencimento|venc/],['desc','Referente a (opcional)',/servico|descri|refer|produto|obs/]];
+function startImport(rows){
+  const h=rows.findIndex(r=>r.filter(x=>String(x).trim()).length>=2);
+  if(h<0)throw new Error('A planilha está vazia.');
+  const H=rows[h].map(x=>String(x).trim()),body=rows.slice(h+1).filter(r=>r.some(x=>String(x).trim()));
+  const pick={};for(const [k,,re] of FIELDS){pick[k]=H.findIndex((x,j)=>re.test(norm(x))&&!Object.values(pick).includes(j))}
+  imp={H,body,pick};
+  $('map').innerHTML=FIELDS.map(([k,l])=>`<label class="field"><span>${l}</span><select data-map="${k}"><option value="-1">— não tem —</option>${H.map((x,i)=>`<option value="${i}"${pick[k]==i?' selected':''}>${esc(x||'Coluna '+(i+1))}</option>`).join('')}</select></label>`).join('');
+  $('mapBox').hidden=false;renderImport();
+}
+function importRows(){const p=imp.pick;
+  return imp.body.map(r=>{const g=k=>p[k]>=0?r[p[k]]:'';
+    return {nome:String(g('nome')).replace(/\s+/g,' ').trim(),tel:phone(g('tel')),valor:money(g('valor')),data:isoBR(g('data')),desc:String(g('desc')||'').trim()}})
+    .filter(d=>d.nome&&d.valor>0)}
+function renderImport(){
+  const list=importRows(),semTel=list.filter(d=>!telOfDebt(d)).length;
+  $('mapPreview').innerHTML=`<table><thead><tr><th>Cliente</th><th>Valor</th><th>Data</th><th>WhatsApp</th><th>Referente</th></tr></thead><tbody>${list.slice(0,5).map(d=>`<tr><td>${esc(d.nome)}</td><td>${brl(d.valor)}</td><td>${brDate(d.data)}</td><td>${fmtPhone(telOfDebt(d))}</td><td>${esc(d.desc)}</td></tr>`).join('')}</tbody></table>`;
+  $('mapInfo').textContent=`${list.length} débito${list.length==1?'':'s'} encontrado${list.length==1?'':'s'}, somando ${brl(list.reduce((s,d)=>s+d.valor,0))}.`+(semTel?` ${semTel} sem WhatsApp (nem na planilha, nem na lista de clientes).`:list.length?' Todos com WhatsApp.':'');
+  $('btnImport').disabled=!list.length;$('btnImport').textContent=`Importar ${list.length} débito${list.length==1?'':'s'}`;
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click',e=>{
+  const t=e.target;
+  const tb=t.closest('.tab');if(tb){tab=tb.id=='tabCobranca'?'cobranca':'resgate';local.set('tab',tab);renderTabs();return}
+  const chip=t.closest('.chip');if(chip){seg=chip.dataset.s;local.set('seg',seg);shown=50;renderChips();renderMsg();renderList();return}
+  const sb=t.closest('[data-send]');if(sb){const v=sb.dataset.send;setTimeout(()=>markSent(v,true),300);return}
+  const tg=t.closest('[data-toggle]');if(tg){markSent(tg.dataset.toggle,!recent(tg.dataset.toggle));return}
+  const cp=t.closest('[data-copy]');if(cp){const c=clients.find(x=>x.tel==cp.dataset.copy);const m=msgFor(c);
+    (navigator.clipboard?navigator.clipboard.writeText(m):Promise.reject()).then(()=>toast('Texto copiado'),()=>toast('Não deu para copiar. Use o botão do WhatsApp.'));return}
+  const fb=t.closest('[data-cf]');if(fb){cf=fb.dataset.cf;document.querySelectorAll('[data-cf]').forEach(b=>b.setAttribute('aria-pressed',b==fb));renderCob();return}
+  const ab=t.closest('[data-av]');if(ab){av=+ab.dataset.av;document.querySelectorAll('[data-av]').forEach(b=>b.setAttribute('aria-pressed',b==ab));$('ctpl').value=ctplOf(av);renderCob();return}
+  const cb=t.closest('[data-cob]');if(cb){const id=cb.dataset.cob;setTimeout(()=>{const d=debts.find(x=>x.id==id);if(d)putDebt({...d,avisos:[...(d.avisos||[]),todayKey]})},300);return}
+  const pb=t.closest('[data-paid]');if(pb){const d=debts.find(x=>x.id==pb.dataset.paid);if(d){putDebt({...d,status:'paga',pagaEm:todayKey});toast('Marcado como recebido')}return}
+  const ub=t.closest('[data-unpaid]');if(ub){const d=debts.find(x=>x.id==ub.dataset.unpaid);if(d){const {pagaEm,...rest}=d;putDebt({...rest,status:'aberta'})}return}
+  const xb=t.closest('[data-del]');if(xb){const id=xb.dataset.del;if(pendingDel==id){pendingDel=null;delDebt(id);toast('Cobrança excluída')}else{pendingDel=id;renderCob();setTimeout(()=>{if(pendingDel==id){pendingDel=null;renderCob()}},4000)}return}
+});
+$('more').onclick=()=>{shown+=50;renderList()};
+$('q').oninput=()=>{shown=50;renderList()};
+$('cq').oninput=()=>renderCob();
+$('tpl').oninput=()=>{cfg.tpls={...(cfg.tpls||{}),[seg]:$('tpl').value};saveCfg();renderMsg();renderList()};
+$('salao').oninput=()=>{cfg.salao=$('salao').value;saveCfg();renderMsg();renderList();renderCob()};
+$('optSair').onchange=()=>{cfg.sair=$('optSair').checked;saveCfg();renderMsg();renderList()};
+$('ctpl').oninput=()=>{cfg.cob={...(cfg.cob||{}),[av]:$('ctpl').value};saveCfg();renderCob()};
+$('pix').oninput=()=>{cfg.pix=$('pix').value;saveCfg();renderCob()};
+['optSms','optStaff'].forEach(id=>$(id).onchange=()=>{shown=50;renderStats();renderChips();renderMsg();renderList()});
+let pendente=null;
+function setupDrop(zone,input,onFile){
+  zone.addEventListener('click',()=>input.click());
+  zone.addEventListener('keydown',e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();input.click()}});
+  ['dragenter','dragover'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.add('over')}));
+  ['dragleave','drop'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.remove('over')}));
+  zone.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)onFile(f)});
+  input.addEventListener('change',e=>{const f=e.target.files[0];e.target.value='';if(f)onFile(f)});
+}
+async function onClientesFile(f){
+  const z=$('dropClientes');z.classList.add('busy');$('dropTitle').textContent='Lendo '+f.name+'…';
+  try{const rows=compactClientes(await readRows(f));
+    const tmp=rows.map(r=>({tel:r[1],sms:r[5]})),comTel=tmp.filter(c=>c.tel).length,ok=tmp.filter(c=>c.tel&&c.sms).length;
+    pendente={rows,name:f.name};
+    $('confirmTitle').textContent='Confira antes de usar: '+f.name;
+    $('confirmNums').innerHTML=`<div><b>${rows.length.toLocaleString('pt-BR')}</b><span>clientes no arquivo</span></div><div><b>${comTel.toLocaleString('pt-BR')}</b><span>com WhatsApp válido</span></div><div><b>${ok.toLocaleString('pt-BR')}</b><span>aceitam mensagens</span></div>`+(clients.length?`<div><b>${clients.length.toLocaleString('pt-BR')}</b><span>na lista atual (será substituída)</span></div>`:'');
+    $('confirmBox').hidden=false;$('confirmBox').scrollIntoView({block:'nearest',behavior:'smooth'});
+  }catch(err){banner('bad',err.message+' Confira se escolheu o relatório de Clientes exportado do Trinks.')}
+  finally{z.classList.remove('busy');renderDrop()}
+}
+function renderDrop(){const z=$('dropClientes'),has=clients.length>0;z.classList.toggle('compact',has);
+  $('dropTitle').textContent=has?'Enviar a lista nova do mês':'Arraste aqui a lista de clientes do Trinks';
+  $('dropHint').textContent=has?'arraste o arquivo aqui ou toque para escolher':'ou toque para escolher o arquivo · CSV ou Excel';
+  $('howTo').open=!has;}
+setupDrop($('dropClientes'),$('fileClientes'),onClientesFile);
+setupDrop($('dropDebitos'),$('fileDebitos'),async f=>{try{startImport(await readRows(f))}catch(err){toast(err.message)}});
+$('btnUsar').onclick=async()=>{if(!pendente)return;const p=pendente;pendente=null;$('confirmBox').hidden=true;await saveClientes(p.rows,p.name);renderDrop()};
+$('btnDescartar').onclick=()=>{pendente=null;$('confirmBox').hidden=true};
+
+$('map').onchange=e=>{const s=e.target.closest('[data-map]');if(s&&imp){imp.pick[s.dataset.map]=+s.value;renderImport()}};
+$('btnCancelImport').onclick=()=>{imp=null;$('mapBox').hidden=true};
+$('btnImport').onclick=async()=>{if(!imp)return;const list=importRows();$('btnImport').disabled=true;
+  for(const d of list)await putDebt({id:newId(),...d,tel:d.tel||telOfDebt(d),status:'aberta',avisos:[],criadoEm:todayKey});
+  imp=null;$('mapBox').hidden=true;toast(`${list.length} débitos importados`);renderCob()};
+$('dNome').oninput=()=>{const c=byName[norm($('dNome').value)];if(c&&!$('dTel').value)$('dTel').value=fmtPhone(c.tel)};
+$('formDebito').onsubmit=async e=>{e.preventDefault();
+  const nome=$('dNome').value.replace(/\s+/g,' ').trim(),valor=money($('dValor').value);
+  if(!nome||!valor){toast('Preencha cliente e valor.');return}
+  const tel=phone($('dTel').value)||telOfDebt({nome});
+  await putDebt({id:newId(),nome,tel,valor,data:$('dData').value||todayKey,desc:$('dDesc').value.trim(),status:'aberta',avisos:[],criadoEm:todayKey});
+  e.target.reset();toast(`Débito de ${firstName(nome)} adicionado`)};
+
+function showMeta(m){const idade=daysSince(m.geradoEm);
+  banner(idade>35?'ex':'ok',`Lista do Trinks enviada em ${brDate(m.geradoEm)} · ${clients.length.toLocaleString('pt-BR')} clientes`+(idade>35?' · já passou um mês, envie a lista nova':''))}
+/* ---------- início ---------- */
+renderAll();
+(async()=>{
+  db=null;
+  if(!db){sent=local.get('sent',{});cfg={...cfg,...local.get('cfg',{})};debts=local.get('debts',[]);
+    const l=local.get('lista',null);
+    if(l&&l.rows){loadClients(l.rows);showMeta(l.meta)}else banner('ex','Nenhuma lista carregada ainda. Comece enviando o relatório de Clientes do Trinks.');
+    renderAll();renderDrop();return}
+  let ver=null;
+  db.doc('listas/atual').onSnapshot(async snap=>{
+    if(!snap.exists){banner('ex','Nenhuma lista salva ainda. Envie o relatório de Clientes do Trinks.');return}
+    const m=snap.data();if(m.versao===ver)return;ver=m.versao;
+    try{const ps=await db.collection('listas/atual/partes').get();
+      const parts=ps.docs.filter(d=>+d.id.slice(1)<m.partes).sort((a,b)=>a.id.slice(1)-b.id.slice(1));
+      loadClients(parts.flatMap(d=>d.data().rows||[]));
+      const idade=daysSince(m.geradoEm);
+      banner(idade>35?'ex':'ok',`Lista do Trinks de ${brDate(m.geradoEm)} · ${clients.length.toLocaleString('pt-BR')} clientes`+(idade>35?' · já passou um mês, envie a lista nova':''));
+      renderAll()}
+    catch(e){banner('bad','Não consegui ler a lista salva. Recarregue a página.')}
+  },()=>banner('bad','A conexão com a lista caiu. Recarregue a página.'));
+  db.collection('envios').onSnapshot(s=>{const m={};s.docs.forEach(d=>m[d.id]=d.data().data);sent=m;renderChips();renderList()},()=>{});
+  db.collection('cobrancas').onSnapshot(s=>{debts=s.docs.map(d=>({id:d.id,...d.data()}));renderCob()},()=>{});
+  db.doc('config/mensagens').onSnapshot(s=>{if(s.exists&&!s.metadata.hasPendingWrites){cfg={...cfg,...s.data()};renderMsg();renderList();renderCob()}},()=>{});
+})();
+})();
+</script>
+
+</body>
+</html>
